@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const PlayerSchema = new mongoose.Schema({
+const DetailedPlayerSchema = new mongoose.Schema({
   playerID: { type: Number, required: true, unique: true },
   name: { type: String, required: true },
   position: { type: String },
@@ -11,6 +11,6 @@ const PlayerSchema = new mongoose.Schema({
   lastUpdated: { type: Date, default: Date.now },
 });
 
-const Player = mongoose.model("Player", PlayerSchema);
+const DetailedPlayer = mongoose.model("Player", PlayerSchema);
 
-export default Player;
+export default DetailedPlayer;
