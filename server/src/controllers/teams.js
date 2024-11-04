@@ -57,6 +57,19 @@ class Teams {
       console.log(`There was an error storing a team: ${error}`);
     }
   }
+
+  async getTeams(req, res) {
+    const teams = await Team.find();
+    res.status(200).json({ teams: teams });
+  }
+
+  async getTeamById(req, res) {
+    console.log("Request received");
+    const teamId = req.params.id;
+    console.log(`Request received for teamId: ${teamId}`);
+    const team = await Team.find({ teamId: teamId });
+    res.status(200).json({ team: team });
+  }
 }
 
 export default Teams;
