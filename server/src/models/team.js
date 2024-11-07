@@ -1,5 +1,13 @@
 import mongoose from "mongoose";
 
+const PlayerSchema = new mongoose.Schema({
+  playerId: { type: Number, required: true, unique: true },
+  name: { type: String },
+  position: { type: String },
+  dateOfBirth: { type: String },
+  nationality: { type: String },
+});
+
 const TeamSchema = new mongoose.Schema({
   teamId: { type: Number, required: true, unique: true },
   name: { type: String, required: true },
@@ -7,9 +15,9 @@ const TeamSchema = new mongoose.Schema({
   crestImg: { type: String },
   coach: { type: String },
   venue: { type: String },
+  squad: [PlayerSchema],
   lastUpdated: { type: Date, default: Date.now },
 });
 
-const Team = mongoose.model("Team", TeamSchema);
-
-export default Team;
+export const Team = mongoose.model("Team", TeamSchema);
+export const Player = mongoose.model("Player", PlayerSchema);

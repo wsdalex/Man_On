@@ -16,6 +16,7 @@ app.use(express.json());
 
 connectToDatabase();
 
+teams.fetchTeams();
 app.use("/competitions", competitionRouter);
 app.use("/teams", teamsRouter);
 app.get("/", (req, res) => {

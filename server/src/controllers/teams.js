@@ -1,4 +1,4 @@
-import Team from "../models/team.js";
+import { Team, Player } from "../models/team.js";
 import axios from "axios";
 
 class Teams {
@@ -39,7 +39,7 @@ class Teams {
 
   async storeTeam(teamData) {
     try {
-      const team = Team.findOneAndUpdate(
+      const team = await Team.findOneAndUpdate(
         { teamId: teamData.id },
         {
           teamId: teamData.id,
@@ -52,6 +52,20 @@ class Teams {
         },
         { upsert: true, new: true }
       );
+
+      for (const player of teamData.squad) {
+        const playerData = {
+          playerId: player.id,
+          name: player.name,
+          position: player.position,
+          dateOfBirth: player.dateOfBirth,
+          nationality: player.nationality,
+        };
+
+        const newPlayer = new Player(playerData);
+        team.squad.push(newPlayer);
+      }
+      await team.save();
       return team;
     } catch (error) {
       console.log(`There was an error storing a team: ${error}`);
