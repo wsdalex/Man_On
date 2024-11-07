@@ -39,6 +39,9 @@ class Teams {
 
   async storeTeam(teamData) {
     try {
+      const competitionIds = teamData.runningCompetitions.map(
+        (competition) => competition.id
+      );
       const team = await Team.findOneAndUpdate(
         { teamId: teamData.id },
         {
@@ -48,6 +51,7 @@ class Teams {
           crestImg: teamData.crest,
           coach: teamData.coach.name,
           venue: teamData.venue,
+          competitions: competitionIds,
           lastUpdated: new Date(),
         },
         { upsert: true, new: true }
@@ -83,6 +87,13 @@ class Teams {
     console.log(`Request received for teamId: ${teamId}`);
     const team = await Team.find({ teamId: teamId });
     res.status(200).json({ team: team });
+  }
+
+  async getTeamsByCompId(req, res) {
+    const compId = req.params.id;
+    console.log(`Request received for teamId: ${compId}`);
+    const teams = await Team.find({ competitions: compId });
+    res.status(200).json({ teams: teams });
   }
 }
 

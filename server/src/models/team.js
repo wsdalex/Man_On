@@ -16,6 +16,7 @@ const TeamSchema = new mongoose.Schema({
   coach: { type: String },
   venue: { type: String },
   squad: [PlayerSchema],
+  competitions: [{ type: Number }],
   lastUpdated: { type: Date, default: Date.now },
 });
 
